@@ -25,7 +25,7 @@ if (EnvVars.nodeEnv === NodeEnvs.Dev) {
 
 app.use(
   cors({
-    origin: "http://localhost:3000 https://hatch-assignment.azurewebsites.net",
+    origin: "*",
   })
 );
 
