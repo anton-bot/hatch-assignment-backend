@@ -20,13 +20,20 @@ function create(tr: TaskRequest): Promise<Task> {
   return TaskRepo.create(newTask);
 }
 
-async function update(task: Task): Promise<void> {
-  const exists = await TaskRepo.exists(task.id);
-  if (!exists) {
+async function markDone(id: string, done: boolean): Promise<Task> {
+  const task = await TaskRepo.getOne(id);
+  if (!task) {
     throw new RouteError(StatusCodes.NOT_FOUND, `Task not found`);
   }
-
-  return TaskRepo.update(task);
+  task.done = done;
+  const updated = await TaskRepo.update(task);
+  if (!updated) {
+    throw new RouteError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      `Failed to update task`
+    );
+  }
+  return updated;
 }
 
 async function deleteAll(): Promise<void> {
@@ -36,6 +43,6 @@ async function deleteAll(): Promise<void> {
 export default {
   getAll,
   create,
-  update,
+  markDone,
   deleteAll,
 } as const;
