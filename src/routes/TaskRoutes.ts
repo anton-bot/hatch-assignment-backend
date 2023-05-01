@@ -18,7 +18,7 @@ async function create(req: Request, res: Response) {
     return res.status(StatusCodes.BAD_REQUEST).end();
   }
   const createdTask = await TaskService.create(task);
-  return res.status(StatusCodes.CREATED).send({
+  return res.status(StatusCodes.CREATED).json({
     data: createdTask,
   });
 }
@@ -27,7 +27,7 @@ async function markDone(req: Request, res: Response) {
   const { id } = req.params;
   const { done } = req.body;
   const updatedTask = await TaskService.markDone(id, done);
-  return res.status(StatusCodes.OK).send({
+  return res.status(StatusCodes.OK).json({
     data: updatedTask,
   });
 }
