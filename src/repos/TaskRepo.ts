@@ -11,11 +11,6 @@ async function getOne(taskId: string): Promise<Task | null> {
   return null;
 }
 
-async function exists(id: string): Promise<boolean> {
-  const db = await orm.openDb();
-  return db.tasks.some((task) => task.id === id);
-}
-
 async function getAll(): Promise<Task[]> {
   const db = await orm.openDb();
   return db.tasks;
@@ -28,15 +23,17 @@ async function create(task: Task): Promise<Task> {
   return task;
 }
 
-async function update(updatedTask: Task): Promise<void> {
+async function update(updatedTask: Task): Promise<Task | null> {
   const db = await orm.openDb();
   for (const existingTask of db.tasks) {
     if (existingTask.id === updatedTask.id) {
       existingTask.label = updatedTask.label;
       existingTask.done = updatedTask.done;
-      return orm.saveDb(db);
+      await orm.saveDb(db);
+      return existingTask;
     }
   }
+  return null;
 }
 
 async function deleteAll(): Promise<void> {
@@ -47,7 +44,6 @@ async function deleteAll(): Promise<void> {
 
 export default {
   getOne,
-  exists,
   getAll,
   create,
   update,

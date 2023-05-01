@@ -23,9 +23,10 @@ async function create(req: Request, res: Response) {
   });
 }
 
-async function update(req: Request, res: Response) {
-  const { task } = req.body;
-  const updatedTask = await TaskService.update(task);
+async function markDone(req: Request, res: Response) {
+  const { id } = req.params;
+  const { done } = req.body;
+  const updatedTask = await TaskService.markDone(id, done);
   return res.status(StatusCodes.OK).send({
     data: updatedTask,
   });
@@ -39,6 +40,6 @@ async function deleteAll(req: Request, res: Response) {
 export default {
   getAll,
   create,
-  update,
+  markDone,
   deleteAll,
 } as const;
