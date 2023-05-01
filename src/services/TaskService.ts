@@ -29,18 +29,13 @@ async function update(task: Task): Promise<void> {
   return TaskRepo.update(task);
 }
 
-async function remove(id: string): Promise<void> {
-  const exists = await TaskRepo.exists(id);
-  if (!exists) {
-    throw new RouteError(StatusCodes.NOT_FOUND, "Task not found");
-  }
-
-  return TaskRepo.remove(id);
+async function deleteAll(): Promise<void> {
+  return TaskRepo.deleteAll();
 }
 
 export default {
   getAll,
   create,
   update,
-  remove,
+  deleteAll,
 } as const;
