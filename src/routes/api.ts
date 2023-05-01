@@ -5,7 +5,7 @@ const taskRouter = Router();
 
 taskRouter.get(`/task`, TaskRoutes.getAll);
 taskRouter.post(`/task`, TaskRoutes.create);
-taskRouter.put(`/task/:id`, TaskRoutes.markDone);
-taskRouter.delete(`/task/:id`, TaskRoutes.deleteAll);
+taskRouter.patch(`/task/:id`, TaskRoutes.markDone);
+taskRouter.delete(`/task`, TaskRoutes.deleteAll);
 
 export { taskRouter };

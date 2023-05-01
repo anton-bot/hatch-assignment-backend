@@ -1,6 +1,7 @@
 import morgan from "morgan";
 import express, { NextFunction, Request, Response } from "express";
 import logger from "jet-logger";
+import cors from "cors";
 
 import "express-async-errors";
 
@@ -21,6 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 if (EnvVars.nodeEnv === NodeEnvs.Dev) {
   app.use(morgan("dev"));
 }
+
+app.use(
+  cors({
+    origin: "http://localhost:3000 https://hatch-assignment.azurewebsites.net",
+  })
+);
 
 app.use("/api", taskRouter);
 

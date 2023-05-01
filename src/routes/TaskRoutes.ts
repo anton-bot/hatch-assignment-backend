@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import TaskService from "../services/TaskService";
 import { isValidTaskRequest } from "../types/TaskRequest";
 
+const MAX_TASK_LABEL_LENGTH = 1000;
+
 async function getAll(req: Request, res: Response) {
   const filter =
     typeof req.query.filter === "string" && req.query.filter.trim()
@@ -15,6 +17,9 @@ async function getAll(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
   const { task } = req.body;
   if (!isValidTaskRequest(task)) {
+    return res.status(StatusCodes.BAD_REQUEST).end();
+  }
+  if (task.label.trim().length > MAX_TASK_LABEL_LENGTH) {
     return res.status(StatusCodes.BAD_REQUEST).end();
   }
   const createdTask = await TaskService.create(task);
