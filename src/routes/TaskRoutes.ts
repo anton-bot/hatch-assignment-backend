@@ -31,9 +31,8 @@ async function update(req: Request, res: Response) {
   });
 }
 
-async function remove(req: Request, res: Response) {
-  const id = req.params.id;
-  await TaskService.remove(id);
+async function deleteAll(req: Request, res: Response) {
+  await TaskService.deleteAll();
   return res.status(StatusCodes.OK).end();
 }
 
@@ -41,5 +40,5 @@ export default {
   getAll,
   create,
   update,
-  remove,
+  deleteAll,
 } as const;

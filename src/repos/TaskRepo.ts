@@ -39,9 +39,9 @@ async function update(updatedTask: Task): Promise<void> {
   }
 }
 
-async function remove(id: string): Promise<void> {
+async function deleteAll(): Promise<void> {
   const db = await orm.openDb();
-  db.tasks = db.tasks.filter((task) => task.id !== id);
+  db.tasks = [];
   return orm.saveDb(db);
 }
 
@@ -51,5 +51,5 @@ export default {
   getAll,
   create,
   update,
-  remove,
+  deleteAll,
 } as const;
