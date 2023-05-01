@@ -21,10 +21,11 @@ async function getAll(): Promise<Task[]> {
   return db.tasks;
 }
 
-async function create(task: Task): Promise<void> {
+async function create(task: Task): Promise<Task> {
   const db = await orm.openDb();
   db.tasks.push(task);
-  return orm.saveDb(db);
+  await orm.saveDb(db);
+  return task;
 }
 
 async function update(updatedTask: Task): Promise<void> {
