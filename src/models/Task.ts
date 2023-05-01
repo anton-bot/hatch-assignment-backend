@@ -7,7 +7,7 @@ export type Task = {
   done: boolean;
 };
 
-function create(
+function createTask(
   label: string,
   id?: string,
   timestamp?: number,
@@ -21,12 +21,12 @@ function create(
   };
 }
 
-function from(data: object): Task {
+function createTaskFrom(data: object): Task {
   if (!isValidTask(data)) {
     throw new Error("Invalid data while trying to construct a task");
   }
 
-  return create(data.label, data.id, data.timestamp, data.done);
+  return createTask(data.label, data.id, data.timestamp, data.done);
 }
 
 function isValidTask(obj: unknown): obj is Task {
@@ -40,8 +40,4 @@ function isValidTask(obj: unknown): obj is Task {
   );
 }
 
-export default {
-  create,
-  from,
-  isValidTask,
-} as const;
+export { createTask, createTaskFrom, isValidTask };

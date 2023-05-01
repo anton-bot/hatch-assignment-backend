@@ -1,6 +1,6 @@
 import jsonfile from "jsonfile";
 
-import { Task } from "@src/models/Task";
+import { Task } from "../models/Task";
 
 const DB_FILE_NAME = "database.json";
 
