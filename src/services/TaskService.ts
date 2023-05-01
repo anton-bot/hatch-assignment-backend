@@ -1,10 +1,17 @@
-import TaskRepo from "@src/repos/TaskRepo";
-import { Task } from "@src/models/Task";
-import { RouteError } from "@src/other/RouteError";
+import TaskRepo from "../repos/TaskRepo";
+import { Task } from "../models/Task";
+import { RouteError } from "../other/RouteError";
 import { StatusCodes } from "http-status-codes";
+import { GroupedTasks } from "../types/GroupedTasks";
+import { separateTasks } from "../tasks/separateTasks";
+import { sortAndTruncateTasks } from "../tasks/sortAndTruncateTasks";
+import { filterTasks } from "../tasks/filterTasks";
 
-function getAll(): Promise<Task[]> {
-  return TaskRepo.getAll();
+async function getAll(filter?: string): Promise<GroupedTasks> {
+  const tasks = await TaskRepo.getAll();
+  const filteredTasks = filterTasks(tasks, filter);
+  const activeAndDone = separateTasks(filteredTasks);
+  return sortAndTruncateTasks(activeAndDone);
 }
 
 function create(task: Task): Promise<void> {

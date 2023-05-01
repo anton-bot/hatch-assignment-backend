@@ -4,13 +4,13 @@ import logger from "jet-logger";
 
 import "express-async-errors";
 
-import { taskRouter } from "@src/routes/api";
+import { taskRouter } from "./routes/api";
 
-import EnvVars from "@src/constants/EnvVars";
+import EnvVars from "./constants/EnvVars";
 import { StatusCodes } from "http-status-codes";
 
-import { NodeEnvs } from "@src/constants/misc";
-import { RouteError } from "@src/other/RouteError";
+import { NodeEnvs } from "./constants/misc";
+import { RouteError } from "./other/RouteError";
 
 const app = express();
 

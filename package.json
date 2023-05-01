@@ -6,7 +6,7 @@
     "build": "npx ts-node build.ts",
     "start": "node -r module-alias/register ./dist --env=production",
     "dev": "nodemon",
-    "test": "jest"
+    "test": "jest --coverage --collectCoverageFrom='src/**/*.ts'"
   },
   "nodemonConfig": {
     "watch": [
@@ -17,9 +17,6 @@
       "src/public"
     ],
     "exec": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./src"
-  },
-  "_moduleAliases": {
-    "@src": "dist"
   },
   "engines": {
     "node": ">=16.0.0"

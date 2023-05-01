@@ -1,4 +1,4 @@
-import { Task } from "@src/models/Task";
+import { Task } from "../models/Task";
 import orm from "./MockOrm";
 
 async function getOne(taskId: string): Promise<Task | null> {

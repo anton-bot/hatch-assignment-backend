@@ -1,9 +1,13 @@
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
-import TaskService from "@src/services/TaskService";
+import TaskService from "../services/TaskService";
 
 async function getAll(req: Request, res: Response) {
-  const tasks = await TaskService.getAll();
+  const filter =
+    typeof req.query.filter === "string" && req.query.filter.trim()
+      ? req.query.filter.trim()
+      : undefined;
+  const tasks = await TaskService.getAll(filter);
   return res.status(StatusCodes.OK).json({ data: tasks });
 }
 
