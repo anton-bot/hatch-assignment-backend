@@ -1,13 +1,13 @@
 import morgan from "morgan";
-import express, { Request, Response, NextFunction } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import logger from "jet-logger";
 
 import "express-async-errors";
 
-import BaseRouter from "@src/routes/api";
+import { taskRouter } from "@src/routes/api";
 
 import EnvVars from "@src/constants/EnvVars";
-import HttpStatusCodes from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 
 import { NodeEnvs } from "@src/constants/misc";
 import { RouteError } from "@src/other/RouteError";
@@ -22,13 +22,12 @@ if (EnvVars.nodeEnv === NodeEnvs.Dev) {
   app.use(morgan("dev"));
 }
 
-app.use("/", BaseRouter);
+app.use("/api", taskRouter);
 
 // Add error handler
-app.use((err: Error, _: Request, res: Response) => {
+app.use((err: Error, _: Request, res: Response, next: NextFunction) => {
   logger.err(err, true);
-  let status =
-    err instanceof RouteError ? err.status : HttpStatusCodes.BAD_REQUEST;
+  let status = err instanceof RouteError ? err.status : StatusCodes.BAD_REQUEST;
   return res.status(status).json({ error: err.message });
 });
 
