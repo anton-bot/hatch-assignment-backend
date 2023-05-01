@@ -22,7 +22,7 @@
     "@src": "dist"
   },
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
