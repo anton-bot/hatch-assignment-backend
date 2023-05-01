@@ -1,18 +1,18 @@
 import jsonfile from "jsonfile";
 
-import { IUser } from "@src/models/User";
+import { Task } from "@src/models/Task";
 
 const DB_FILE_NAME = "database.json";
 
-interface IDb {
-  users: IUser[];
+interface Database {
+  tasks: Task[];
 }
 
-function openDb(): Promise<IDb> {
-  return jsonfile.readFile(__dirname + "/" + DB_FILE_NAME) as Promise<IDb>;
+function openDb(): Promise<Database> {
+  return jsonfile.readFile(__dirname + "/" + DB_FILE_NAME);
 }
 
-function saveDb(db: IDb): Promise<void> {
+function saveDb(db: Database): Promise<void> {
   return jsonfile.writeFile(__dirname + "/" + DB_FILE_NAME, db);
 }
 
